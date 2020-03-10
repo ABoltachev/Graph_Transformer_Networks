@@ -73,7 +73,7 @@ if __name__ == '__main__':
                             num_class=num_classes,
                             num_layers=num_layers,
                             norm=norm)
-        model.cuda()
+        model = model.cuda()
         if adaptive_lr == 'false':
             optimizer = torch.optim.Adam(model.parameters(), lr=0.005, weight_decay=0.001)
         else:
@@ -98,7 +98,7 @@ if __name__ == '__main__':
             print('Epoch:  ',i+1)
             model.zero_grad()
             model.train()
-            loss,y_train,Ws = model(A, node_features, train_node, train_target)
+            loss, y_train, Ws = model(A, node_features, train_node, train_target)
             train_acc = accuracy(torch.argmax(y_train.detach(), dim=1), train_target)
             print('Train - Loss: {}, Acc: {}'.format(loss.detach().cpu().numpy(), train_acc))
             loss.backward()
